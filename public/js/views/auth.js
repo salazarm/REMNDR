@@ -36,9 +36,7 @@ App.Views.Auth = Backbone.View.extend({
 
 	render : function () {
 		this._loginPage.show();
-		console.log("render triggered");
 		if (App.User.get("loggedIn")){
-			console.log("loggedIn triggered");
 			new App.Views.LoggedIn({ model: App.User, el: $("#user-display-container") });
 			this.goTo("###");
 			this._loginRelated.hide();
@@ -59,9 +57,7 @@ App.Views.Auth = Backbone.View.extend({
 	},
 
 	loginView : function() {
-		console.log("loginView triggered");
 		if(this.authForm != this._loginForm){
-			console.log("authForm triggered")
 			this.authForm = this._loginForm;
 			this._signupForm.hide();
 			this.render();
@@ -103,8 +99,7 @@ App.Views.Auth = Backbone.View.extend({
 					loggedIn: false,
 					name: "Not logged in!"
 				});
-				console.log(that);
-				that._loginRelated.show();
+				that.render();
 			}
 		});
 	},
