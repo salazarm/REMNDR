@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def first_reminder
-    self.notes.create(:title => "Welcome!", :content => WELCOME_MESSAGE, :due => 11.hours.from_now )
+    self.notes.create(:title => "Welcome!", :content => WELCOME_MESSAGE, :due => 2.hours.from_now )
   end
   # Overrides humanized attribute names
   def self.human_attribute_name(attr, options={})

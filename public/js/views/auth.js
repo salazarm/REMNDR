@@ -43,6 +43,7 @@ App.Views.Auth = Backbone.View.extend({
 			$("#app").show();
 		} else {
 			this.app.hide();
+			this._loginRelated.show();
 			this._loginPage.show();
 			this.authForm.show();
 		}
@@ -99,7 +100,6 @@ App.Views.Auth = Backbone.View.extend({
 					loggedIn: false,
 					name: "Not logged in!"
 				});
-				that.render();
 			}
 		});
 	},
