@@ -539,3 +539,30 @@ div.new {
 	-o-transform: rotate(-6deg);
 	transform: rotate(-6deg);
 }
+
+@-webkit-keyframes rotate {
+  from {
+    -webkit-transform: rotate(-20deg);
+  }
+  to { 
+    -webkit-transform: rotate(20deg);
+  }
+}
+
+.clock2 {
+	margin-top: 60px;
+	margin-left: 140px;
+	background-image: url("../img/clock2.png");
+	width: 189px;
+	height: 197px;
+	background-size: 189px 197px;
+}
+
+.clock2:hover {
+    -webkit-animation-name:             rotate; 
+    -webkit-animation-duration:         .1s; 
+    -webkit-animation-iteration-count:  6;
+    -webkit-animation-timing-function: linear;
+    animation-direction:alternate;
+	-webkit-animation-direction:alternate;
+};
