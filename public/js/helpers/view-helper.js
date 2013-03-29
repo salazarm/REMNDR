@@ -108,7 +108,7 @@ var ViewHelper = {
                     return c1+(c2-c1)*dec;
                 };
                 var make_rgb = function(r,g,b){
-                    return "rgb("+r+","+g+","+b+");";
+                    return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");";
                 };
                 
                 today = ViewHelper.days.today().to_s();
