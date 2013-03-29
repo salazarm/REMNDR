@@ -3,7 +3,8 @@ App.Views.Edit = Backbone.View.extend({
     events: {
         "click .save1" : "save",
         "click .close1" : "close",
-        "click .delete1" : "destroy"
+        "click .delete1" : "destroy",
+        "click .logout" : "close"
     },
     
     initialize : function() {
