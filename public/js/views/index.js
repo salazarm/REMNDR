@@ -81,7 +81,6 @@ App.Views.Index = Backbone.View.extend({
         this.switchToday();
         setInterval(function(){
             if (App.User.get("loggedIn")){
-                console.log("in")
                 App.Notes.fetch({
                     error: function(model, response, options){
                         new App.Views.Notice({ message: response.msg? response.msg : "Failed to load reminders" , type: "error"})

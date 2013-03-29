@@ -44,8 +44,8 @@ var ViewHelper = {
         [58060800000, 'centuries', 2903040000] // 60*60*24*7*4*12*100*20, 60*60*24*7*4*12*100
     ],
 
-   /* closure for days */
-   days : (function(){ 
+    /* closure for days */
+    days : (function(){ 
 
         var day = function(ms){
             return {
@@ -84,8 +84,8 @@ var ViewHelper = {
            colors: (function(){
                     color_red = {    r: 200, g: 83, b: 68    };
                     color_yellow = {    r: 250, g: 213, b: 31    };
-                    color_blue = {    r: 29, g:156, b: 191    };
-                    color_grey = {    r: 29, g:156, b:191    };
+                    color_blue = {    r: 19, g:157, b: 197    };
+                    color_grey = {    r: 153, g:153, b:153    };
 
                     return {
                         red: function(){ return color_red; },
@@ -115,16 +115,17 @@ var ViewHelper = {
                 tomorrow = ViewHelper.days.tomorrow().to_s();
                 week = ViewHelper.days.week().to_s();
                 var seconds = -ViewHelper.get_seconds(date_str);
+                console.log(seconds);
                 if (seconds < 0){
                     return "rgb(186,141,117);"
                 } else if (seconds < today) {
-                    dec = seconds/today
+                    dec = seconds/today;
                     return get_in_between(this.colors.red(), this.colors.yellow(), dec);
                 } else if (seconds < tomorrow) {
-                    dec = (seconds-today)/(tomorrow-today)
+                    dec = (seconds-today)/(tomorrow-today);
                     return get_in_between(this.colors.yellow(), this.colors.blue(), dec);
                 } else if (seconds < week) {
-                    dec = (seconds-tomorrow)/(week-tomorrow)
+                    dec = (seconds-tomorrow)/(week-tomorrow);
                     return get_in_between(this.colors.blue(), this.colors.grey(), dec);
                 } else {
                     grey = this.colors.grey();
