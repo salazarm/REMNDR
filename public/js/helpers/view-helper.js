@@ -115,7 +115,6 @@ var ViewHelper = {
                 tomorrow = ViewHelper.days.tomorrow().to_s();
                 week = ViewHelper.days.week().to_s();
                 var seconds = -ViewHelper.get_seconds(date_str);
-                console.log(seconds);
                 if (seconds < 0){
                     return "rgb(186,141,117);"
                 } else if (seconds < today) {
