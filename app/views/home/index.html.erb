@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title>REMNDR</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width">
+        <%= csrf_meta_tags %>
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+        <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+        <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <script src="js/plugins.js"></script>
+        <script src="js/vendor/modernizr-2.6.2.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
+        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.7.1/backbone-validation-min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
+        <script src="js/jquery-ui-timepicker-addon.js"></script>
+        <link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css">
+
+    </head>
+    <body>
+
+        <div id="auth" class="auth" style="display:none;">
+            
+            <div id="user-display-container">
+            </div>
+
+            <div id="login-related">
+
+                <div class="blackbox">
+                    <h1 class="rmndr">REMNDR</h1>
+                    <p class="rmndr">REMNDR is a simple app for writing down notes. <br />
+                    We believe that notes are written with the purpose of being <br />
+                    looked at again. RMNDR helps you accomplish this goal. </p>
+                    <div class="clock"></div>
+                    <div class="strip" ></div>
+                    <div class="pencil"></div>
+                </div>
+
+                <div style="text-algin: center">
+                    <div style="margin: 50px 0 -100px 0;">
+                        <div class="authbtn login">Login</div> 
+                        <span style="color: #fff;">OR</span>
+                        <div class="authbtn signup inactive">Signup</div>
+                    </div>
+                </div>
+           
+                <div id="login-form">
+                    <%= form_tag sessions_path, :id=>"login-form-f" do %>  
+                      <div class="field">  
+                        <%= text_field_tag :email, params[:email], :placeholder=>"example@email.com" %>  
+                      </div>  
+                      <div class="field">  
+                        <%= password_field_tag :password, params[:password], :placeholder=>"password" %>  
+                      </div>  
+                      <div class="actions"> 
+                        <%= submit_tag "Log in", :class=>"loginbtn" %></div>  
+                    <% end %>  
+                </div> 
+
+                <div id="signup-form">
+                    <%= form_for newUser do |f| %>
+                        <div class="field">
+                            <%= f.text_field :email, :placeholder=>"example@email.com" %>
+                        </div>
+                        <div class="field">
+                            <%= f.password_field :password, :placeholder=>"password" %>
+                        </div>
+                        <div class="field">
+                            <%= f.password_field :password_confirmation, :placeholder=>"verify password" %>
+                        </div>
+                        <div class ="actions"><%= f.submit "Sign Up!" %></div>
+                    <% end %>
+                </div> 
+            </div>
+        </div>
+        <div id="errors" class="notice"></div>
+        <div id="messages" class="notice"></div>
+        <div id="success" class="notice"></div>
+        
+        <div id="app" class="container" style="margin:auto; width: 70%; margin-top:20px; display:none;">
+            <section class="app-header row-fluid">
+               <span class="wrapper">
+                    <span class="tod-wrap time">Today&nbsp;
+                        <span class="today count"></span>
+                    </span>
+                </span>
+                <span class="wrapper">
+                    <span class="tom-wrap time">Tomorrow&nbsp;
+                        <span class="tomorrow count"></span>
+                    </span>
+                </span>
+                <span class="wrapper">
+                    <span class="week-wrap time">Week&nbsp;
+                        <span class="week count"></span>
+                    </span>
+                </span>
+                <span class="wrapper">
+                    <span class="all-wrap time">All-time&nbsp;
+                        <span class="all-time count"></span>
+                    </span>
+                </span>
+            </section>
+
+            <section class="note-header">
+                <div class="reminders-heading">Reminders</div>
+                <div class="note-title"><textarea style="display: none;" name="title" placeholder="Get Driver's License" maxlength="40"></textarea></div>
+            </section>
+
+            <section class="container">
+                <div class="reminders">
+                </div>
+                <div class="note">
+                    <div class="text-area">
+                        <div id="new-post-it-wrapper">
+                            <div id="push"></div>
+                            <div id="new-post-it">
+                                <div class="new">Make a New Reminder!</div>
+                            </div>
+                        </div>
+                        <textarea style="display: none;"note placeholder="Get my drivers licence! Bring my passport, cellphone and call the baby-sitter!" name="content"></textarea>
+                    </div>
+                    <br>
+                    <div class="top">
+                        <br>
+                        <span class="save1 bttn"></span>
+                        <span class="close1 bttn">Close</span>
+                        <span class="delete1 bttn">Delete</span>
+                        <span style="margin-left:60px;" class="bttn">
+                            Due: <input type="text" id="due-date" style="width:250px;">
+                        </span>
+                    </div>
+                    <span class="created-at bttn"></span>
+                </div>
+            </section>
+        </div>
+
+        <script type="text/template" id="user-display-template">
+            <div id="logo"><div class="logo">REMNDR</div></div>
+            <div id="login" class="pull-right">
+                <span class="name">Logged in as [[= email ]] </span>
+                <span class="logout"><a href="#logout">logout</a></span>
+            </div>
+        </script>
+
+        <script type="text/template" id="note-template">
+            <div class="reminder" id="[[= id ]]" 
+            style="background-color:[[= color.colorfy(due)]]">
+                <div class="reminder-hover">
+                    <div class="title">[[= title ]]</div>
+                    <div class="created">
+                             &nbsp;
+                        <span class="pull-right"> 
+                            [[= pretty_date(due) ]]
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </script>
+        <script src="js/helpers/view-helper.js"></script>
+        <script src="js/application.js"></script>
+        <script src="js/main.js"></script>
+        <script type="text/javascript">
+            // rails uses <% %> so I will use [[ ]] and [[= ]]
+            _.templateSettings = {
+                interpolate: /\[\[\=(.+?)\]\]/g,
+                evaluate: /\[\[(.+?)\]\]/g
+            };
+            $("#logo").fadeIn(2000);
+            $(function() {
+                <% if @cur_user %>
+                    var user = new App.Models.User({
+                        id: "<%= @cur_user.id %>",
+                        loggedIn: true,
+                        email: "<%= @cur_user.email %>"
+                    });
+                <% else %>
+                    var user = new App.Models.User({});
+                <% end %>
+                App.init(user);
+            });
+        </script>
+        <script src="js/plugins.js"></script>
+        <script src="js/models/notes.js"></script>
+        <script src="js/models/user.js"></script>
+        <script src="js/collections/notes.js"></script>
+        <script src="js/routers/notes.js"></script>
+        <script src="js/views/index.js"></script>
+        <script src="js/views/edit.js"></script>
+        <script src="js/views/notice.js"></script>
+        <script src="js/views/auth.js"></script>
+        <script src="js/views/loggedin.js"></script>
+        <script src="js/date.format.js"></script>
+
+        <footer style="text-align: center; margin-top:20px;"> Created by Marco Salazar for 6.170 </footer>
+    </body>
+</html>
