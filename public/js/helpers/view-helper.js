@@ -51,7 +51,7 @@ var ViewHelper = {
             return {
                 ms: ms,
                 to_s: function(){
-                    return this.ms/1000();
+                    return this.ms/1000;
                 }
             };
         };
@@ -63,16 +63,16 @@ var ViewHelper = {
         
         return {
             today: function(){
-                return today_milli();
-            },
+                return today_milli;
+            }(),
 
             tomorrow: function (){
-                return tomorrow_milli();
-            },
+                return tomorrow_milli;
+            }(),
 
             week: function(){
-                return week_milli();
-            }
+                return week_milli
+            }()
         }
 
         })(),
@@ -111,9 +111,9 @@ var ViewHelper = {
                     return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");";
                 };
                 
-                today = ViewHelper.days.today.to_s;
-                tomorrow = ViewHelper.days.tomorrow.to_s;
-                week = ViewHelper.days.week.to_s;
+                today = ViewHelper.days.today.to_s();
+                tomorrow = ViewHelper.days.tomorrow.to_s();
+                week = ViewHelper.days.week.to_s();
                 var seconds = -ViewHelper.get_seconds(date_str);
                 if (seconds < 0){
                     return "rgb(186,141,117);"
