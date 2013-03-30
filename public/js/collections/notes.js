@@ -6,9 +6,9 @@ App.Collections.Notes = Backbone.Collection.extend({
     url: '/notes',
 
     delta: 1000*5, // 5 second lineincy
-    tomorrow: ViewHelper.days.tomorrow().ms,
-    today: ViewHelper.days.today().ms,
-    week: ViewHelper.days.week().ms,
+    tomorrow: ViewHelper.days.tomorrow.ms,
+    today: ViewHelper.days.today.ms,
+    week: ViewHelper.days.week.ms,
 
     // Find the notes due within 24 hours
     getTodays: function() {
