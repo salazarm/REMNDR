@@ -107,7 +107,7 @@ var ViewHelper = {
                 var between_colors = function(c1, c2, dec) {
                     return c1+(c2-c1)*dec;
                 };
-                var make_rgb = function(r,g,b){
+                var make_rgb = function(r,g,b) {
                     return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");";
                 };
                 
