@@ -17,7 +17,9 @@ var App = {
         */
         var appRouter = new App.Routers.Notes({ });
         Backbone.View.prototype.goTo = function (loc) {
+          scr = document.body.scrollTop;
           appRouter.navigate(loc, true);
+          document.body.scrollTop = scr;
         };
         App.loaded = false;
         App.Notes = new App.Collections.Notes({}); 

@@ -7,6 +7,7 @@ App.Routers.Notes = Backbone.Router.extend({
     
     edit: function(id) {
         if (!App.User.get("loggedIn")) return;
+        that=this;
         var note = new Note({ id: id });
         this.beforeRoute();
         note.fetch({  
@@ -18,7 +19,6 @@ App.Routers.Notes = Backbone.Router.extend({
             },
             error: function(model, response, options) {
                 new App.Views.Notice({ message: 'Could not find that note.', type: "error" });
-                window.location.hash = '#';
             }
         })
     },

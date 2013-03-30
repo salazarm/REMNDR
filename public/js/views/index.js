@@ -87,7 +87,7 @@ App.Views.Index = Backbone.View.extend({
                     }
                 });
             }
-        }, 1000);
+        }, 50);
     },
     
     clean : function(){

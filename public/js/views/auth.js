@@ -38,7 +38,6 @@ App.Views.Auth = Backbone.View.extend({
 		this._loginPage.show();
 		if (App.User.get("loggedIn")){
 			new App.Views.LoggedIn({ model: App.User, el: $("#user-display-container") });
-			this.goTo("###");
 			this._loginRelated.hide();
 			$("#app").show();
 		} else {

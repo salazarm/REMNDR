@@ -107,7 +107,7 @@ var ViewHelper = {
                 var between_colors = function(c1, c2, dec) {
                     return c1+(c2-c1)*dec;
                 };
-                var make_rgb = function(r,g,b) {
+                var make_rgb = function(r,g,b){
                     return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");";
                 };
                 
@@ -127,7 +127,7 @@ var ViewHelper = {
                     dec = (seconds-tomorrow)/(week-tomorrow);
                     return get_in_between(this.colors.blue, this.colors.grey, dec);
                 } else {
-                    grey = this.colors.grey;
+                    grey = this.colors.grey();
                     return make_rgb(grey.r, grey.g, grey.b);
                 }
             }
