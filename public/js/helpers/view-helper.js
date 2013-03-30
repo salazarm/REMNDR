@@ -88,10 +88,10 @@ var ViewHelper = {
                     color_grey = {    r: 153, g:153, b:153    };
 
                     return {
-                        red: function(){ return color_red; },
-                        yellow: function(){ return color_yellow; },
-                        blue: function(){ return color_blue; },
-                        grey: function(){ return color_grey; }
+                        red: function(){ return color_red; }(),
+                        yellow: function(){ return color_yellow; }(),
+                        blue: function(){ return color_blue; }(),
+                        grey: function(){ return color_grey; }()
                     };
                 }
             )(),
@@ -119,13 +119,13 @@ var ViewHelper = {
                     return "rgb(186,141,117);"
                 } else if (seconds < today) {
                     dec = seconds/today;
-                    return get_in_between(this.colors.red(), this.colors.yellow(), dec);
+                    return get_in_between(this.colors.red, this.colors.yellow, dec);
                 } else if (seconds < tomorrow) {
                     dec = (seconds-today)/(tomorrow-today);
-                    return get_in_between(this.colors.yellow(), this.colors.blue(), dec);
+                    return get_in_between(this.colors.yellow, this.colors.blue, dec);
                 } else if (seconds < week) {
                     dec = (seconds-tomorrow)/(week-tomorrow);
-                    return get_in_between(this.colors.blue(), this.colors.grey(), dec);
+                    return get_in_between(this.colors.blue, this.colors.grey, dec);
                 } else {
                     grey = this.colors.grey();
                     return make_rgb(grey.r, grey.g, grey.b);
