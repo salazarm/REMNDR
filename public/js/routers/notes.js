@@ -24,8 +24,8 @@ App.Routers.Notes = Backbone.Router.extend({
     },
     
     index: function(path) {
-        if (!App.User.get("loggedIn")) return;
         this.navigate("");
+        if (!App.User.get("loggedIn")) return;
         App.Notes.fetch({
             success: function(model, response, options){
                 if (App.Index == null){
