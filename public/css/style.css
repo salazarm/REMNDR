@@ -562,7 +562,7 @@ div.new {
     -webkit-animation-name:             rotate; 
     -webkit-animation-duration:         .1s; 
     -webkit-animation-iteration-count:  6;
-    -webkit-animation-timing-function: ease;
+    -webkit-animation-timing-function: linear;
     animation-direction:alternate;
 	-webkit-animation-direction:alternate;
 };
