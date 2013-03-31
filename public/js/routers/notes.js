@@ -4,17 +4,27 @@ App.Routers.Notes = Backbone.Router.extend({
         "new":                  "newNote",
         "*path":                "index"  // Wildcard route
     },
+
+    initialize: function() {
+        router = this;
+        Backbone.View.prototype.goTo = function (loc) {
+          scr = document.body.scrollTop; 
+          router.navigate(loc, true);
+          document.body.scrollTop = scr; 
+        };
+
+        Backbone.history.start();
+    },
     
     edit: function(id) {
-        if (!App.User.get("loggedIn")) return;
         that=this;
         var note = new Note({ id: id });
-        this.beforeRoute();
         note.fetch({  
             success: function(model, response, options) {
-            if (App.Editing){
-                App.Editing.undelegateEvents();
-            }
+                if (App.Editing){
+                    // Clean up ghost view
+                    App.Editing.destroy();
+                }
                 App.Editing = new App.Views.Edit({el: $("#app"), model: note });
             },
             error: function(model, response, options) {
@@ -25,32 +35,15 @@ App.Routers.Notes = Backbone.Router.extend({
     
     index: function(path) {
         this.navigate("");
-        if (!App.User.get("loggedIn")) return;
-        App.Notes.fetch({
-            success: function(model, response, options){
-                if (App.Index == null){
-                    App.Index = new App.Views.Index({el: $("#app"), collection: App.Notes});
-                }
-            },
-            error: function(model, response, options){
-                new App.Views.Notice({ message: response.msg, type: "error"})
-            }
-        });
     },
     
     newNote: function() {
-        if (!App.User.get("loggedIn")) return;
-        this.beforeRoute();
-        if (App.Editing){
-            App.Editing.undelegateEvents();
+        if (App.Editing) {  
+            // Clean up ghost view
+            App.Editing.destroy(); 
         }
         App.Editing = new App.Views.Edit({ model: new Note(), el: $("#app") });
     },
 
-    // Check if reminders are loaded
-    beforeRoute: function() {
-        if (!App.loaded){
-            this.index();
-        }
-    },
+
 });

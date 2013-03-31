@@ -7,7 +7,8 @@ App.Views.Auth = Backbone.View.extend({
 	_loginForm: $("#login-form"),
 	_signupForm: $("#signup-form"),
 	_loginRelated: $("#login-related"),
-	app: $("#app"),
+	_userDisplay: $("#user-display-container"),
+	_app: $("#app"),
 	authForm : null,
 
 	// for login
@@ -37,11 +38,11 @@ App.Views.Auth = Backbone.View.extend({
 	render : function () {
 		this._loginPage.show();
 		if (App.User.get("loggedIn")){
-			new App.Views.LoggedIn({ model: App.User, el: $("#user-display-container") });
+			new App.Views.LoggedIn({ model: App.User, el: this._userDisplay });
 			this._loginRelated.hide();
-			$("#app").show();
+			this._app.show();
 		} else {
-			this.app.hide();
+			this._app.hide();
 			this._loginRelated.show();
 			this._loginPage.show();
 			this.authForm.show();
@@ -78,6 +79,10 @@ App.Views.Auth = Backbone.View.extend({
 						password: null,
 						email: response.email
 					});
+					/* Start the party */
+					if (App.Router == null) App.Router = new App.Routers.Notes({});
+					if (App.Collection == null) App.Collection = new App.Collections.Notes({})
+					if (App.Index == null) new App.Views.Index({el: $("#app"), collection: App.Collection });
 				},
 				error: function(model, response, options) {
 					restoreRailsErrors(response);

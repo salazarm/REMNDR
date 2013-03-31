@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   }
 
   def as_json(options={})
-    super(:only => [:email, :id])
+    super(:only => [:email])
   end
 
   def password=(password_str)
@@ -63,6 +63,7 @@ class User < ActiveRecord::Base
   def first_reminder
     self.notes.create(:title => "Welcome!", :content => WELCOME_MESSAGE, :due => 2.hours.from_now )
   end
+  
   # Overrides humanized attribute names
   def self.human_attribute_name(attr, options={})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super

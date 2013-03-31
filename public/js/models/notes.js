@@ -22,6 +22,14 @@ var Note = Backbone.Model.extend({
 
     parse: function(response){
       return response;
-    }
+    },
+    
+    turn_off: function(){
+      this.on = false;
+    },  
+
+    turn_on: function(){
+      this.on = true;
+    },
 
   });

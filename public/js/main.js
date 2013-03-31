@@ -18,4 +18,5 @@ Backbone.sync = function(method, model, success, error) {
   return Backbone._sync(method, model, success, error);
 }
 
+var MAX_INT = 9007199254740992; // max int
 

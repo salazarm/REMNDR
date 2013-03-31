@@ -15,9 +15,7 @@ App.Views.Edit = Backbone.View.extend({
         that = this;
         var msg = this.model.isNew() ? 'Successfully created!' : "Saved!";
         var due;
-
         var title = this.$('[name=title]').val();
-
         if ( title == "") {
             new App.Views.Notice({ 
                     message: "Reminder title cannot be empty!", 
@@ -25,7 +23,6 @@ App.Views.Edit = Backbone.View.extend({
                 });
             return
         }
-
         try {
             due = (new Date( this.$("#due-date").val() )).toISOString();
         } catch (err) {
@@ -35,13 +32,10 @@ App.Views.Edit = Backbone.View.extend({
                 });
             return;
         }
-
-
         new App.Views.Notice({ 
                 message: "Saving...", 
                 type: "message"
             });
-
         this.model.save({ 
                           title: title, 
                           content: this.$('[name=content]').val(),
