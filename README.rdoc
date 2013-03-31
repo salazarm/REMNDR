@@ -1,2 +1,4 @@
 Http://remndr.herokuapp.com
 ===========================
+
+This is a Rails/Backbone app that let's you setup reminders
