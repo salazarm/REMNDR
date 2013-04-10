@@ -33,6 +33,9 @@ class User < ActiveRecord::Base
     :password_digest => "Password"
   }
 
+
+  # We only want to show email and id because the user/client does not need to know
+  # antrhing else.
   def as_json(options={})
     super(:only => [:email, :id])
   end
@@ -63,6 +66,7 @@ class User < ActiveRecord::Base
   def first_reminder
     self.notes.create(:title => "Welcome!", :content => WELCOME_MESSAGE, :due => 2.hours.from_now )
   end
+
   # Overrides humanized attribute names
   def self.human_attribute_name(attr, options={})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super

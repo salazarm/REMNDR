@@ -72,43 +72,67 @@ App.Views.Index = Backbone.View.extend({
         this.week_num = $("span.week");
         this.all_time_num = $("span.all-time");
 
+        this.listenTo(App.Notes, 'change', this.render);
 
         $("textarea").hide();
         $(".bttn").hide();
         $(".calendar").hide();
         this.days = [this.today, this.tomorrow, this.week, this.alls];
-        App.Notes.bind('change' , this.render, this);
         this.switchToday();
-        setInterval(function(){
-            if (App.User.get("loggedIn")){
-                App.Notes.fetch({
-                    error: function(model, response, options){
-                        new App.Views.Notice({ message: response.msg? response.msg : "Failed to load reminders" , type: "error"})
-                    }
-                });
-            }
-        }, 1000);
+        setInterval(this.fetch_models(), 1000);
     },
+
+    fetch_models: function(){
+        if (App.User.get("loggedIn")){
+            App.Notes.fetch({
+                error: function(model, response, options){
+                    new App.Views.Notice({ message: response.msg? response.msg : "Failed to load reminders" , type: "error"})
+                }
+            });
+        }
+    },
+
     
     clean : function(){
         _.each(this.days, function(d){ d.removeClass("active");});
     },
 
     render : function() {
-        // Fill in the reminders
         if (App.Editing == null){
             $("#new-post-it-wrapper").show();
         }
         $(".reminders").empty();
         noteTemplate = this.noteTemplate;
         this.displays();
-        _.each(this.displayCollection.collection.sort(function(a,b){
-            s = (new Date(a.attributes.due)).getTime()-(new Date(b.attributes.due)).getTime();
-            return s;
-        }), function(note){
-            _.extend(note.attributes, ViewHelper);
-            $(".reminders").append(noteTemplate(note.attributes));
+
+        /* 
+            NOTE ON CODE DESIGN: 
+        
+            I am not creating a view for each note because I was having difficulty
+            coming up for a way for notes to sort themselves when a new
+            note is added or when a note's due date is changed. 
+            (It would be a bit complicated ). I might clean this part of the
+            code up if time permits in the next submission. I'd have to write a
+            function that checks all of the children nodes of $(".reminders")
+            and parses their due dates and then repositions their nodes. The
+            currently used solution is much slower and creates a lot of unneeded
+            re-rendering. 
+        */
+        _.each(
+            this.displayCollection.collection.sort(
+                // sorting function
+                function(a,b){
+                    order = (new Date(a.attributes.due)).getTime()-(new Date(b.attributes.due)).getTime();
+                    return order;
+                }), 
+
+            // function run by the .each
+            function(note){
+                _.extend(note.attributes, ViewHelper);
+                $(".reminders").append(noteTemplate(note.attributes));
         });
+
+
 
         // fill in the number values for each type
         this.today_num.html( this.collection.getTodays().length );

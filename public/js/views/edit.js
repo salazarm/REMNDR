@@ -12,7 +12,7 @@ App.Views.Edit = Backbone.View.extend({
     },
     
     save : function() {
-        that = this;
+        var that = this;
         var msg = this.model.isNew() ? 'Successfully created!' : "Saved!";
         var due;
 
@@ -53,6 +53,8 @@ App.Views.Edit = Backbone.View.extend({
                         message: msg, 
                         type: "success" 
                     });
+                App.Index.fetch_models();
+                App.Index.render();
                 that.goTo('notes/' + model.get("id"));
                 that.render(true);
             },
@@ -70,6 +72,8 @@ App.Views.Edit = Backbone.View.extend({
         this.model.destroy({
             success: function(model, response, options){
                 that.close();
+                App.Index.fetch_models();
+                App.Index.render();
                 new App.Views.Notice({message: "Successfully remove reminder", type:"success"});
             },
 

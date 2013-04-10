@@ -3,13 +3,9 @@ class UsersController < ApplicationController
     user = User.new(params[:user])
     if user.save
       cookies[:auth_token] = user.auth_token
-      respond_to do |format|
-      	format.json { render :json => user , :only => ["id","email"]}
-      end
+      render :json => user , :status => 200
     else
-	      respond_to do |format|
-			      format.json {render :json => user.errors, :status => 500}
-		    end 
+	    render :json => user.errors, :status => 500
     end
   end
 end

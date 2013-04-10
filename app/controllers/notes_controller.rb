@@ -5,7 +5,7 @@ class NotesController < ApplicationController
 		if @cur_user
 			render :json => @cur_user.notes
 		else
-			render :status => 500
+			render :json => {}, :status => 404
 		end
 	end
 
@@ -15,14 +15,10 @@ class NotesController < ApplicationController
 			if can_edit?(note)
 				render :json => note
 			else
-			respond_to do |format|
-				render :status => 404
-			end
+				render :json => {}, :status => 404
 			end
 		else
-			respond_to do |format|
-				render :status => 500
-			end
+			render :json => {}, :status => 404
 		end
 	end
 
@@ -31,29 +27,35 @@ class NotesController < ApplicationController
 			note = @cur_user.notes.create! params[:note]
 			render :json => note
 		else
-			render :status => 500
+			render :json => {}, :status => 500
 		end
 	end
 
 	def update
 		note = Note.find_by_id(params[:id])
 
-		if !can_edit?(note)
-			render :status => 404
-		elsif note.update_attributes(params[:note])
-			render :json => note
+		if @cur_user && note
+			if !can_edit?(note)
+				render :json => {}, :status => 404
+			elsif note.update_attributes(params[:note])
+				render :json => note, :status => 200
+			else
+				render :json => {}, :status => 500
+			end
 		else
-			render :status => 500
+			render :json => {}, :status => 404
 		end
 	end
 
 	def destroy
-		note = Note.find_by_id(params[:id])
-		if note && !can_edit?(note)
-			render :status => 404
-		elsif note
-			note.destroy
-			render :json => {:msg => "item deleted!"},:status => 200
+		if @cur_user
+			note = Note.find_by_id(params[:id]) 
+			if  note && !can_edit?(note)
+				render :status => 404
+			elsif note
+				note.destroy
+				render :json => {:msg => "item deleted!"},:status => 200
+			end
 		else
 			render :json => {:msg => "could not find that reminder!"}, :status => 404
 		end

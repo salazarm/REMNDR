@@ -1,5 +1,10 @@
+/* Has functions used throughout the application */
 var ViewHelper = {
 
+    /* 
+        Takes a date and returns an English "casual" representation
+        ex: 5 minutes from now, a year from now, etc
+    */
     pretty_date : function(date_str) {
         var seconds = this.get_seconds(date_str);
         var token = 'ago';
@@ -57,9 +62,9 @@ var ViewHelper = {
         };
 
         // times in milliseconds
-        var today_milli = new day( 86400000 ); 
-        var tomorrow_milli = new day( 172800000 );
-        var week_milli = new day( 604800000 );
+        var today_milli = new day( 86400000 );  // Millisecond representation of day
+        var tomorrow_milli = new day( 172800000 ); // Millisecond representation of tomorrow
+        var week_milli = new day( 604800000 ); // Millisecond representation of week
         
         return {
             today: function(){
@@ -96,7 +101,7 @@ var ViewHelper = {
                 }
             )(),
 
-
+            // Blends RGB values linearly to color a note appropiately
             colorfy: function(date_str){
                 var get_in_between = function( rgb1, rgb2, dec) {
                     r = between_colors(rgb1.r, rgb2.r, dec);
@@ -127,7 +132,7 @@ var ViewHelper = {
                     dec = (seconds-tomorrow)/(week-tomorrow);
                     return get_in_between(this.colors.blue, this.colors.grey, dec);
                 } else {
-                    grey = this.colors.grey();
+                    grey = this.colors.grey;
                     return make_rgb(grey.r, grey.g, grey.b);
                 }
             }

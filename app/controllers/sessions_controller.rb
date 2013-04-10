@@ -4,11 +4,9 @@ class SessionsController < ApplicationController
 	  user = User.find_by_email(params[:email])  
 	  if user && user.authenticate(params[:password]) 
 	  	cookies[:auth_token] = user.auth_token
-	  	render :json => user, :only => ["id" ,"email"]
+	  	render :json => user, :only => ["id" ,"email"], :status => 200
 	  else
-	  	respond_to do |format|
-			format.json {render :json => {"Invalid Login" => "wrong email and/or password"}, :status => 404}
-		end 
+	  	render :json => {"Invalid Login" => "wrong email and/or password"}, :status => 404
 	  end
 	end  
   

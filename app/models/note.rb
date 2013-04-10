@@ -4,7 +4,7 @@ class Note < ActiveRecord::Base
   validates_presence_of :title, :due, :user_id
   validates :title, :length => (0..40)
 
-  def to_json(option = {})
+  def as_json(option = {})
   	super(option.merge(:only => [ :id, :title, :due, :content, :created_at ]))
   end
 end
