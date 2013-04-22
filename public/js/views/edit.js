@@ -9,6 +9,9 @@ App.Views.Edit = Backbone.View.extend({
     
     initialize : function() {
         this.model.bind('reset', this.render(), this);
+        $("#results").hide();
+        $("#search").val("");
+
     },
     
     save : function() {

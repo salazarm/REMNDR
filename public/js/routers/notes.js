@@ -1,8 +1,9 @@
 App.Routers.Notes = Backbone.Router.extend({
     routes: {
-        "notes/:id":            "edit",
-        "new":                  "newNote",
-        "*path":                "index"  // Wildcard route
+        "notes/:id"         :   "edit",
+        "new"               :   "newNote",
+        "search/:query"     :   "search", 
+        "*path"             :   "index"  // Wildcard route
     },
     
     edit: function(id) {
@@ -36,6 +37,10 @@ App.Routers.Notes = Backbone.Router.extend({
                 new App.Views.Notice({ message: response.msg, type: "error"})
             }
         });
+    },
+
+    search: function(query) {
+
     },
     
     newNote: function() {

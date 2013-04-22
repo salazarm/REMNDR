@@ -14,6 +14,7 @@ App.Views.Index = Backbone.View.extend({
         "click .tom-wrap"   :  "switchTomorrow",
         "click .week-wrap"  :  "switchWeek",
         "click .all-wrap"   :  "switchAllTime",
+        "click .search"     :  "search",
     },
 
     // Used on render to update the displayCollectionz
@@ -77,6 +78,10 @@ App.Views.Index = Backbone.View.extend({
         $("textarea").hide();
         $(".bttn").hide();
         $(".calendar").hide();
+        new App.Views.Search({ el: $("#searchresults"), 
+                               note_template: this.noteTemplate,
+                               collection: this.collection
+                            });
         this.days = [this.today, this.tomorrow, this.week, this.alls];
         this.switchToday();
         setInterval(this.fetch_models(), 1000);
@@ -145,7 +150,7 @@ App.Views.Index = Backbone.View.extend({
         this.goTo("notes/"+ev.currentTarget.id);
     },
 
-    newNote : function(){
+    newNote : function() {
         this.goTo("new");
     },
 

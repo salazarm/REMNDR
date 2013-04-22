@@ -3,10 +3,6 @@ require 'test_helper'
 class UserFlowTest < ActionDispatch::IntegrationTest
 
   def setup
-  	user = 	User.find_by_email("test@test.com")
-  	if user
-  		user.destroy
-  	end
 	  @user1 = User.create(:email => "user1@user1.com",
                          :password=>"user3@user3.com",
                          :password_confirmation => "user3@user3.com")
@@ -84,7 +80,7 @@ class UserFlowTest < ActionDispatch::IntegrationTest
   			}
   	assert_response 200
 
-  	assert_equal 'bla' @user.notes[1].title
+  	assert_equal 'bla', @user1.notes[1].title
   end
 
 

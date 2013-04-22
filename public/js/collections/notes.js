@@ -28,11 +28,29 @@ App.Collections.Notes = Backbone.Collection.extend({
     },
 
     // Finds notes due between t1 and t2.
-    getNotes: function(t1, t2){
+    getNotes: function(t1, t2) {
       that = this;
       return this.filter(function(note){ 
         return that.withinTimeFrame(note.get('due'),t1,t2);
       });
+    },
+
+    search: function(query) {
+      var results = this.filter(function(note){
+        var first = _search(note.get("title"), query);
+        var second = _search(note.get("content"), query);
+        if (first || second){ 
+          note.set({  'score': 5*first + second }, 
+                 {  silent: true  });
+          return true; 
+        }
+        return false;
+      });
+      results.sort(function(a,b) {  return b.score - a.score; });
+      _.each(results, function(m){
+        m.unset('score', {silent: true });
+      });
+      return results;
     },
 
     //Check if a date is between two dates with leniency delta

@@ -50,7 +50,7 @@ var ViewHelper = {
     ],
 
     /* closure for days */
-    days : (function(){ 
+    days : (function() { 
 
         var day = function(ms){
             return {
@@ -102,7 +102,7 @@ var ViewHelper = {
             )(),
 
             // Blends RGB values linearly to color a note appropiately
-            colorfy: function(date_str){
+            colorfy: function(date_str) {
                 var get_in_between = function( rgb1, rgb2, dec) {
                     r = between_colors(rgb1.r, rgb2.r, dec);
                     g = between_colors(rgb1.g, rgb2.g, dec);
@@ -113,7 +113,12 @@ var ViewHelper = {
                     return c1+(c2-c1)*dec;
                 };
                 var make_rgb = function(r,g,b){
-                    return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");";
+                    var extra = ""
+                    var delta = 50
+                    if (_within(250, delta, r) && _within(213, delta, g) && _within(31, delta, b)){
+                        extra = "color:#000";
+                    }
+                    return "rgb("+Math.floor(r)+","+Math.floor(g)+","+Math.floor(b)+");"+extra;
                 };
                 
                 today = ViewHelper.days.today.to_s();
@@ -138,7 +143,7 @@ var ViewHelper = {
             }
         },
 
-    get_seconds : function(date_str){
+    get_seconds : function(date_str) {
         var time = ('' + date_str).replace(/-/g, "/").replace(/[TZ]/g, " ");
         var seconds = ((new Date).getTime() - (new Date(time)).getTime()) / 1000;
         // Quick timezone hack for this submission while I figure out how to
@@ -148,8 +153,15 @@ var ViewHelper = {
     }
 }
 
+var _within = function(val, delta, testval) {
+    delta = Math.abs(delta)
+    if (testval<val+delta && testval>val-delta){
+        return true;
+    }
+    return false;
+}
 
-var restoreRailsErrors = function(response){
+var restoreRailsErrors = function(response) {
     r = JSON.parse(response.responseText);
     for (var re in r){
         alert(re+": "+r[re]);

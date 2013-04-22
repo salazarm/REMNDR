@@ -2,7 +2,6 @@ require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
   
-
   test "wrong login info" do
   	post :create , :email => "test@test.com", 
   		:password => "testing"

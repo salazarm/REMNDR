@@ -14,18 +14,15 @@
         <link rel="stylesheet" href="css/main.css">
         <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
         <link href='http://fonts.googleapis.com/css?family=Arvo' rel='stylesheet' type='text/css'>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
+        <link rel="stylesheet" href="css/bootstrap-datetimepicker.min.css">
         <script src="js/plugins.js"></script>
         <script src="js/vendor/modernizr-2.6.2.min.js"></script>
         <link rel="stylesheet" href="css/style.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.9.0.min.js"><\/script>')</script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js"></script>
-        <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.0.0/backbone-min.js"></script>
-        <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.validation/0.7.1/backbone-validation-min.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/jqueryui/1.10.2/jquery-ui.min.js"></script>
-        <script src="js/jquery-ui-timepicker-addon.js"></script>
-        <link rel="stylesheet" href="css/jquery-ui-timepicker-addon.css">
 
     </head>
     <body>
@@ -110,7 +107,39 @@
                         <span class="all-time count"></span>
                     </span>
                 </span>
+                <span id="searchresults" style="float: right; margin: -3px 20px 0 0">
+                    <input id="search" style="!important; 
+                        direction: ltr;
+                        zoom: 1;
+                        -webkit-writing-mode: horizontal-tb;
+                        letter-spacing: normal;
+                        word-spacing: normal;
+                        text-transform: none;
+                        text-indent: 0px;
+                        text-shadow: none;
+                        display: inline-block;
+                        text-align: start;
+                        font: -webkit-small-control;
+                        -webkit-rtl-ordering: logical;
+                        -webkit-user-select: text;
+                        cursor: auto;
+                        background-color: white;
+                        font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+                        font-size: 11px;
+                        -webkit-appearance: none;
+                        -webkit-border-radius: 0;
+                        color: #777;
+                        border: 0;
+                        margin: 0 0 0 0 0;
+                        outline: none;
+                        padding: 4px 50pxpx 2px 5px;
+                        padding-top: 2px;
+                        width: 215px;" placeholder="Search your notes!  "></input>
+                        <ul id="results" style="display: none; padding: 0; background-color: #C7C7B7; position: absolute; width: 227px;">
+                        </ul>
+                </span>
             </section>
+            <span style="clear:both; margin:0;"></span>
 
             <section class="note-header">
                 <div class="reminders-heading">Reminders</div>
@@ -147,6 +176,15 @@
             </section>
         </div>
 
+        <script type="text/template" id="bottom-results-template">
+            <div class="bottom" style="font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+            font-size: 11px; color: #2e2e2e; padding: 5px 0 5px 0; text-align: center;">
+
+             Showing [[= showing ]] of [[= total ]] results
+
+            </div>
+        </script>
+
         <script type="text/template" id="user-display-template">
             <div id="logo"><div class="logo">REMNDR</div></div>
             <div id="login" class="pull-right">
@@ -154,6 +192,7 @@
                 <span class="logout"><a href="#logout">logout</a></span>
             </div>
         </script>
+
 
         <script type="text/template" id="note-template">
             <div class="reminder" id="[[= id ]]" 
@@ -169,16 +208,31 @@
                 </div>
             </div>
         </script>
-        
-        <script src="js/helpers/view-helper.js"></script>
-        <script src="js/application.js"></script>
-        <script src="js/main.js"></script>
-        <script type="text/javascript">
+         <script type="text/javascript">
             // rails uses <% %> so I will use [[ ]] and [[= ]]
             _.templateSettings = {
                 interpolate: /\[\[\=(.+?)\]\]/g,
                 evaluate: /\[\[(.+?)\]\]/g
             };
+        </script>
+        <script src="js/helpers/view-helper.js"></script>
+        <script src="js/application.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/models/notes.js"></script>
+        <script src="js/models/user.js"></script>
+        <script src="js/collections/notes.js"></script>
+        <script src="js/routers/notes.js"></script>
+        <script src="js/views/index.js"></script>
+        <script src="js/views/edit.js"></script>
+        <script src="js/views/notice.js"></script>
+        <script src="js/views/auth.js"></script>
+        <script src="js/views/loggedin.js"></script>
+        <script src="js/views/nav.js"></script>
+        <script src="js/views/search.js"></script>
+        <script src="js/date.format.js"></script>
+        <script src="js/search.js"></script>
+        <script type="text/javascript">
             $("#logo").fadeIn(2000);
             $(function() {
                 <% if @cur_user %>
@@ -193,19 +247,7 @@
                 App.init(user);
             });
         </script>
-        <script src="js/plugins.js"></script>
-        <script src="js/models/notes.js"></script>
-        <script src="js/models/user.js"></script>
-        <script src="js/collections/notes.js"></script>
-        <script src="js/routers/notes.js"></script>
-        <script src="js/views/index.js"></script>
-        <script src="js/views/edit.js"></script>
-        <script src="js/views/notice.js"></script>
-        <script src="js/views/auth.js"></script>
-        <script src="js/views/loggedin.js"></script>
-        <script src="js/views/nav.js"></script>
-        <script src="js/date.format.js"></script>
 
-        <footer style="text-align: center; margin-top:20px;"> Created by Marco Salazar for 6.170 </footer>
+        <footer style="text-align: center; margin-top:20px;"></footer>
     </body>
 </html>
