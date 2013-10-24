@@ -1,8 +1,5 @@
 Http://remndr.herokuapp.com
 ===========================
 
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/salazarm/remndr/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
-
-
-[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/salazarm/remndr/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
+(https://d2weczhvl823v0.cloudfront.net/salazarm/remndr/trend.png)
 
